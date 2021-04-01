@@ -1,3 +1,4 @@
+import AppError from 'src/shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Todo from '../typeorm/entities/Todos';
 import TodosRepository from '../typeorm/repositories/TodosRepository';
@@ -21,7 +22,7 @@ export default class UpdateTodoService {
     const todo = await todosRepository.findById(id);
 
     if (!todo) {
-      throw new Error('Todo not found');
+      throw new AppError('Todo not found');
     }
 
     todo.title = title;

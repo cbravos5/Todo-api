@@ -1,8 +1,11 @@
 import { Router } from 'express';
+import checkAuthentication from 'src/shared/http/middlewares/checkAuthentication';
 import TodosController from '../controllers/TodosController';
 
 const todosRouter = Router();
 const todosController = new TodosController();
+
+todosRouter.use(checkAuthentication);
 
 todosRouter.post('/', todosController.create);
 

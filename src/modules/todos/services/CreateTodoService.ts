@@ -1,4 +1,5 @@
 import UsersRepository from 'src/modules/users/typeorm/repositories/UsersRepository';
+import AppError from 'src/shared/errors/AppError';
 import { getCustomRepository } from 'typeorm';
 import Todo from '../typeorm/entities/Todos';
 import TodosRepository from '../typeorm/repositories/TodosRepository';
@@ -21,6 +22,10 @@ export default class CreateTodoService {
     const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findById(user_id);
+
+    if (!user) {
+      throw new AppError('User not found');
+    }
 
     const todo = todosRepository.create({
       user,

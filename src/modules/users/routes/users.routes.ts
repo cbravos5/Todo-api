@@ -1,11 +1,33 @@
 import { Router } from 'express';
 import UsersController from '../controllers/UsersController';
+import { Joi, celebrate, Segments } from 'celebrate';
+import checkAuthentication from 'src/shared/http/middlewares/checkAuthentication';
 
 const usersRouter = Router();
 const usersController = new UsersController();
 
-usersRouter.post('/', usersController.create);
+usersRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+      password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
+    },
+  }),
+  usersController.create,
+);
 
-usersRouter.get('/:id', usersController.show);
+usersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required(),
+    },
+  }),
+  checkAuthentication,
+  usersController.show,
+);
 
 export default usersRouter;

@@ -21,12 +21,13 @@ export class CreateTodos1617289250072 implements MigrationInterface {
             name: 'description',
             type: 'text',
             isNullable: true,
+            default: null,
           },
           {
             name: 'deadline',
-            type: 'timestamp',
-            isUnique: true,
+            type: 'varchar',
             isNullable: true,
+            default: null,
           },
           {
             name: 'created_at',

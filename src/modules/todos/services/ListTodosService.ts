@@ -5,32 +5,21 @@ import TodosRepository from '../typeorm/repositories/TodosRepository';
 
 interface IRequest {
   user_id: string;
-  title: string;
-  description?: string;
-  deadline?: string;
 }
 
-export default class CreateTodoService {
-  public async exec({
-    user_id,
-    title,
-    description,
-    deadline,
-  }: IRequest): Promise<Todo | undefined> {
+export default class ListTodosService {
+  public async exec({ user_id }: IRequest): Promise<Todo[]> {
     const todosRepository = getCustomRepository(TodosRepository);
     const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findById(user_id);
 
-    const todo = todosRepository.create({
-      user,
-      title,
-      description,
-      deadline,
-    });
+    if (!user) {
+      throw new Error('User not found');
+    }
 
-    await todosRepository.save(todo);
+    const todos = await todosRepository.findAllByUserId(user);
 
-    return todo;
+    return todos;
   }
 }

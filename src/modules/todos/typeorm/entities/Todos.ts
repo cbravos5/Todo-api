@@ -17,10 +17,10 @@ export default class Todo {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   description: string;
 
-  @Column()
+  @Column({ nullable: true, default: null })
   deadline: Date;
 
   @ManyToOne(() => User, user => user.todos)

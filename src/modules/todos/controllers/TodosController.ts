@@ -6,7 +6,8 @@ import DeleteTodoService from '../services/DeleteTodoService';
 
 export default class TodosController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { user_id, title, description, deadline } = req.body;
+    const user_id = req.user.id;
+    const { title, description, deadline } = req.body;
 
     const createTodo = new CreateTodoService();
 
@@ -22,12 +23,14 @@ export default class TodosController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const user_id = req.user.id;
     const { title, description, deadline } = req.body;
 
     const updateTodo = new UpdateTodoService();
 
     const todo = await updateTodo.exec({
       id,
+      user_id,
       title,
       description,
       deadline,
@@ -37,7 +40,7 @@ export default class TodosController {
   }
 
   public async list(req: Request, res: Response): Promise<Response> {
-    const { user_id } = req.body;
+    const user_id = req.user.id;
 
     const listTodos = new ListTodosService();
 
@@ -50,11 +53,13 @@ export default class TodosController {
 
   public async delete(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
+    const user_id = req.user.id;
 
     const deleteTodo = new DeleteTodoService();
 
     await deleteTodo.exec({
       id,
+      user_id,
     });
 
     return res.json({});

@@ -19,15 +19,6 @@ usersRouter.post(
   usersController.create,
 );
 
-usersRouter.get(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required(),
-    },
-  }),
-  checkAuthentication,
-  usersController.show,
-);
+usersRouter.get('/', checkAuthentication, usersController.show);
 
 export default usersRouter;

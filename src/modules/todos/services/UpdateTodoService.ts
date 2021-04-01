@@ -5,6 +5,7 @@ import TodosRepository from '../typeorm/repositories/TodosRepository';
 
 interface IRequest {
   id: string;
+  user_id: string;
   title: string;
   description?: string;
   deadline?: Date;
@@ -13,6 +14,7 @@ interface IRequest {
 export default class UpdateTodoService {
   public async exec({
     id,
+    user_id,
     title,
     description,
     deadline,
@@ -21,7 +23,7 @@ export default class UpdateTodoService {
 
     const todo = await todosRepository.findById(id);
 
-    if (!todo) {
+    if (!todo || todo.user_id != user_id) {
       throw new AppError('Todo not found');
     }
 

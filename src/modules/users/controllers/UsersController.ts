@@ -1,3 +1,4 @@
+import { classToClass } from 'class-transformer';
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 import ShowUserService from '../services/ShowUserService';
@@ -10,7 +11,7 @@ export default class UsersController {
 
     const user = await createUserService.exec({ name, email, password });
 
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -20,6 +21,6 @@ export default class UsersController {
 
     const user = await showUserService.exec({ id });
 
-    return res.json(user);
+    return res.json(classToClass(user));
   }
 }

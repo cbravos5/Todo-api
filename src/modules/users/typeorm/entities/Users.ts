@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import Todo from 'src/modules/todos/typeorm/entities/Todos';
 import {
   Entity,
@@ -20,6 +21,7 @@ export default class User {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @CreateDateColumn()

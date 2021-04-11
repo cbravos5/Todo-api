@@ -3,6 +3,7 @@ import CreateTodoService from '../services/CreateTodoService';
 import UpdateTodoService from '../services/UpdateTodoService';
 import ListTodosService from '../services/ListTodosService';
 import DeleteTodoService from '../services/DeleteTodoService';
+import { classToClass } from 'class-transformer';
 
 export default class TodosController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -18,7 +19,7 @@ export default class TodosController {
       deadline,
     });
 
-    return res.json(todo);
+    return res.json(classToClass(todo));
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
@@ -36,7 +37,7 @@ export default class TodosController {
       deadline,
     });
 
-    return res.json(todo);
+    return res.json(classToClass(todo));
   }
 
   public async list(req: Request, res: Response): Promise<Response> {
@@ -48,7 +49,7 @@ export default class TodosController {
       user_id,
     });
 
-    return res.json(todo);
+    return res.json(classToClass(todo));
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

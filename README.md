@@ -8,6 +8,8 @@ The idea of this mini-project is to take the general todo projects to the next l
 
 With the increasing popularity of the API's, the key point here is to make a restful server that communicates with a front-end app.
 
+This project counts with user sign, todos CRUD, a database for data persistence, token system for security and sessions maintenance, among other resources provided by external packages.
+
 <br/>
 <br/>
 
